@@ -26,18 +26,15 @@
             android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="date" />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/scheduleTime"
-            android:inputType="time" />
+            android:layout_weight="1" />
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,16 +46,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/scheduleDate"
-            android:onClick="onClick" />
+            android:onClick="onClick"
+            android:text="@string/scheduleDate" />
 
         <Button
             android:id="@+id/scheduleTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/scheduleTime"
-            android:onClick="onClick" />
+            android:onClick="onClick"
+            android:text="@string/scheduleTime" />
     </LinearLayout>
 
     <EditText

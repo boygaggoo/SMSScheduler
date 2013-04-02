@@ -9,10 +9,11 @@
     <string name="schedule">Schedule</string>
     <string name="title_activity_scheduler">Scheduler</string>
     <string name="addresseeHint">To:</string>
-    <string name="scheduleDate">Date:</string>
-    <string name="scheduleTime">Time:</string>
     <string name="smsTextHint">Type your message here</string>
     <string name="scheduleTextButton">Done</string>
     <string name="title_activity_send_sms">SendSms</string>
+    <string name="send">Sending SMS...</string>
+    <string name="scheduleDate">Set Date</string>
+    <string name="scheduleTime">Set Time</string>
 
 </resources>

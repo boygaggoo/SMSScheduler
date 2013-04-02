@@ -25,10 +25,8 @@ public class MainActivity extends Activity {
 				
 				Intent fireScheduleActivity = new Intent(MainActivity.this, Scheduler.class);
 				startActivity(fireScheduleActivity);
-				// TODO Auto-generated method stub
-				
-			}
-			
+				// TODO Auto-generated method stub	
+			}	
 		});
 	}
 
@@ -38,5 +36,4 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
 }

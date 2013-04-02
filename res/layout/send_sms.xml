@@ -12,10 +12,9 @@
         android:id="@+id/newId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="102dp"
-        android:text="Sending SMS..."
+        android:text="@string/send"
         android:textSize="20sp" />
 
 </RelativeLayout>

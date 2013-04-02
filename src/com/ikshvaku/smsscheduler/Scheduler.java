@@ -20,13 +20,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class Scheduler extends Activity {
 
+	private static final String workCompleted = "Your SMS has been scheduled";
+	
 	AlarmManager newManager;
 	EditText addressee;
-	TextView date;
-	TextView time;
+	TextView dateView;
+	TextView timeView;
 	EditText smsText;
 	Button scheduleTextButton;
 	Button scheduleTime;
@@ -34,7 +37,8 @@ public class Scheduler extends Activity {
 	Calendar cal;
 	Calendar targetCal;
 	
-	SimpleDateFormat sfg = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+	SimpleDateFormat sfgDate = new SimpleDateFormat("dd.MM.yyyy");
+	SimpleDateFormat sfgTime = new SimpleDateFormat(" HH:mm:ss");
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +46,32 @@ public class Scheduler extends Activity {
 		setContentView(R.layout.scheduler);
 		
 		addressee = (EditText)findViewById(R.id.addressee);
-		date = (TextView)findViewById(R.id.date);
-		time = (TextView)findViewById(R.id.time);
+		dateView = (TextView)findViewById(R.id.date);
+		timeView = (TextView)findViewById(R.id.time);
 		smsText = (EditText)findViewById(R.id.smsText);
 		scheduleDate = (Button)findViewById(R.id.scheduleDate);
 		scheduleTime = (Button)findViewById(R.id.scheduleTime);
 		scheduleTextButton = (Button)findViewById(R.id.scheduleTextButton);
 		
 		
-		cal = Calendar.getInstance();
 		targetCal = Calendar.getInstance();
 		targetCal.set(Calendar.SECOND, 00);
-//		day = cal.get(Calendar.DAY_OF_MONTH);
-//		month = cal.get(Calendar.MONTH) + 1;
-//		year = cal.get(Calendar.YEAR);
-//		hours = cal.get(Calendar.HOUR_OF_DAY);
-//		minutes = cal.get(Calendar.MINUTE);
-//		date.setText(day + "/" + month + "/" + year);
-//		time.setText(hours + ":" + minutes);
+		
+		
+		dateView.setText(checkDate(targetCal.get(Calendar.DAY_OF_MONTH)) + "/" + 
+		checkDate((targetCal.get(Calendar.MONTH )+ 1)) + "/" + checkDate(targetCal.get(Calendar.YEAR)));
+		
+		timeView.setText(checkDate(targetCal.get(Calendar.HOUR_OF_DAY)) + ":" + 
+				checkDate(targetCal.get(Calendar.MINUTE)) + ":" + checkDate(targetCal.get(Calendar.SECOND)));
+		
+		
 		
 		scheduleDate.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				
+				cal = Calendar.getInstance();
 				int day = cal.get(Calendar.DAY_OF_MONTH);
 				int month = cal.get(Calendar.MONTH);
 				int year = cal.get(Calendar.YEAR);
@@ -82,6 +88,8 @@ public class Scheduler extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				
+				cal = Calendar.getInstance();
 				int hours = cal.get(Calendar.HOUR_OF_DAY);
 				int minutes = cal.get(Calendar.MINUTE);
 				
@@ -105,24 +113,20 @@ public class Scheduler extends Activity {
 				String smsData = smsText.getText().toString();
 				String smsAddressee = addressee.getText().toString(); 
 				
-//				smsText.setText("Target Time: " + alarmInstance.getTimeInMillis() 
-//						+ "Current Time: " + cal.getTimeInMillis() + "System Time: " + System.currentTimeMillis()
-//						+ "final time: " + difference);
-//				smsText.setText("Current Time: " + cal.getTimeInMillis());
-//				smsText.setText("System Time: " + System.currentTimeMillis());
-//				smsText.setText("final time: " + difference );
 				Intent fireSendSMSClass = new Intent(Scheduler.this, SendSMS.class);
 				fireSendSMSClass.putExtra("smsData", smsData);
 				fireSendSMSClass.putExtra("smsAddressee", smsAddressee);
-				fireSendSMSClass.putExtra("difference", difference);
 				
 				PendingIntent pdi = PendingIntent.getActivity(Scheduler.this, 0, fireSendSMSClass, 
 						PendingIntent.FLAG_ONE_SHOT);
 				
-				smsText.setText(""+sfg.format(difference));
 				newManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 				newManager.set(AlarmManager.RTC_WAKEUP, difference, pdi);
 				
+				Toast toast = Toast.makeText(Scheduler.this, workCompleted, Toast.LENGTH_LONG);
+				toast.show();
+				
+				finish();
 				// TODO Auto-generated method stub
 				
 			}
@@ -142,7 +146,7 @@ public class Scheduler extends Activity {
 			
 			long time = targetCal.getTimeInMillis();
 			
-			date.setText(sfg.format(time));
+			dateView.setText(sfgDate.format(time));
 			// TODO Auto-generated method stub
 			
 		}
@@ -158,7 +162,7 @@ public class Scheduler extends Activity {
 
 			long time = targetCal.getTimeInMillis();
 			
-			date.setText(sfg.format(time));
+			timeView.setText(sfgTime.format(time));
 		}
 	};
 	
@@ -168,6 +172,16 @@ public class Scheduler extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.scheduler, menu);
 		return true;
+	}
+	
+	public String checkDate(int i)
+	{
+		String date;
+		if(i<10)
+			date = "0" + i;
+		else
+			date = ""+i;
+		return date;
 	}
 
 }
