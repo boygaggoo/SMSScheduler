@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SMS Scheduler</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="welcome_one">Welcome to SMS Scheduler</string>
+    <string name="welcome_two">Press the Button to schedule a message</string>
+    <string name="schedule">Schedule</string>
+    <string name="title_activity_scheduler">Scheduler</string>
+    <string name="addresseeHint">To:</string>
+    <string name="scheduleDate">Date:</string>
+    <string name="scheduleTime">Time:</string>
+    <string name="smsTextHint">Type your message here</string>
+    <string name="scheduleTextButton">Done</string>
+    <string name="title_activity_send_sms">SendSms</string>
+
+</resources>
