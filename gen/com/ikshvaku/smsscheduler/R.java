@@ -24,18 +24,21 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000b;
-        public static final int addressee=0x7f080003;
-        public static final int date=0x7f080004;
-        public static final int newId=0x7f08000a;
+        public static final int action_settings=0x7f08000e;
+        public static final int addressee=0x7f080006;
+        public static final int date=0x7f080007;
+        public static final int items=0x7f080005;
+        public static final int line=0x7f080003;
+        public static final int list=0x7f080004;
+        public static final int newId=0x7f08000d;
         public static final int schedule=0x7f080002;
-        public static final int scheduleDate=0x7f080006;
-        public static final int scheduleTextButton=0x7f080009;
-        public static final int scheduleTime=0x7f080007;
-        public static final int smsText=0x7f080008;
-        public static final int time=0x7f080005;
-        public static final int welcome_one=0x7f080000;
-        public static final int welcome_two=0x7f080001;
+        public static final int scheduleDate=0x7f080009;
+        public static final int scheduleTextButton=0x7f08000c;
+        public static final int scheduleTime=0x7f08000a;
+        public static final int smsText=0x7f08000b;
+        public static final int time=0x7f080008;
+        public static final int welcome_one=0x7f080001;
+        public static final int welcome_two=0x7f080000;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -52,6 +55,7 @@ public final class R {
         public static final int addresseeHint=0x7f050007;
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050002;
+        public static final int listItems=0x7f05000e;
         public static final int schedule=0x7f050005;
         public static final int scheduleDate=0x7f05000c;
         public static final int scheduleTextButton=0x7f050009;

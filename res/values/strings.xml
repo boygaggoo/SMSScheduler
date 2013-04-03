@@ -15,5 +15,6 @@
     <string name="send">Sending SMS...</string>
     <string name="scheduleDate">Set Date</string>
     <string name="scheduleTime">Set Time</string>
+    <string name="listItems">Scheduled Alarms:</string>
 
 </resources>

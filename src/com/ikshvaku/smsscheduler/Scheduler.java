@@ -25,6 +25,7 @@ import android.widget.Toast;
 public class Scheduler extends Activity {
 
 	private static final String workCompleted = "Your SMS has been scheduled";
+	public static final int SCHEDULER_CONSTANT = 2;
 	
 	AlarmManager newManager;
 	EditText addressee;
@@ -36,6 +37,7 @@ public class Scheduler extends Activity {
 	Button scheduleDate;
 	Calendar cal;
 	Calendar targetCal;
+	Intent backIntent; 
 	
 	SimpleDateFormat sfgDate = new SimpleDateFormat("dd.MM.yyyy");
 	SimpleDateFormat sfgTime = new SimpleDateFormat(" HH:mm:ss");
@@ -45,6 +47,7 @@ public class Scheduler extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scheduler);
 		
+		backIntent = getIntent();
 		addressee = (EditText)findViewById(R.id.addressee);
 		dateView = (TextView)findViewById(R.id.date);
 		timeView = (TextView)findViewById(R.id.time);
@@ -59,7 +62,7 @@ public class Scheduler extends Activity {
 		
 		
 		dateView.setText(checkDate(targetCal.get(Calendar.DAY_OF_MONTH)) + "/" + 
-		checkDate((targetCal.get(Calendar.MONTH )+ 1)) + "/" + checkDate(targetCal.get(Calendar.YEAR)));
+				checkDate((targetCal.get(Calendar.MONTH )+ 1)) + "/" + checkDate(targetCal.get(Calendar.YEAR)));
 		
 		timeView.setText(checkDate(targetCal.get(Calendar.HOUR_OF_DAY)) + ":" + 
 				checkDate(targetCal.get(Calendar.MINUTE)) + ":" + checkDate(targetCal.get(Calendar.SECOND)));
@@ -126,9 +129,12 @@ public class Scheduler extends Activity {
 				Toast toast = Toast.makeText(Scheduler.this, workCompleted, Toast.LENGTH_LONG);
 				toast.show();
 				
+				backIntent.putExtra("smsData", smsData);
+				backIntent.putExtra("smsAddressee", smsAddressee);
+				backIntent.putExtra("dateTime", difference);
+				setResult(SCHEDULER_CONSTANT, backIntent);
 				finish();
 				// TODO Auto-generated method stub
-				
 			}
 			
 		});

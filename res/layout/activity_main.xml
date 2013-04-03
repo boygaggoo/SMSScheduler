@@ -9,16 +9,6 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/welcome_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="@string/welcome_one"
-        android:textSize="18sp" />
-
-    <TextView
         android:id="@+id/welcome_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,5 +26,43 @@
         android:layout_marginTop="23dp"
         android:text="@string/schedule"
         android:textSize="15sp" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/list"
+        android:layout_below="@+id/schedule"
+        android:layout_marginTop="14dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/welcome_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/welcome_one"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/items"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/line"
+        android:layout_below="@+id/line"
+        android:layout_marginTop="14dp"
+        android:text="@string/listItems"
+        android:textSize="17sp" />
+
+    <ListView
+        android:layout_below="@id/items"
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true" >
+
+    </ListView>
 
 </RelativeLayout>

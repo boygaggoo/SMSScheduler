@@ -65,7 +65,7 @@
         android:layout_weight="1"
         android:gravity="top"
         android:hint="@string/smsTextHint"
-        android:inputType="text" />
+        android:inputType="text|textMultiLine" />
 
     <Button
         android:id="@+id/scheduleTextButton"
