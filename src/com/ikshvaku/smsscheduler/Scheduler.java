@@ -32,7 +32,7 @@ public class Scheduler extends Activity {
 	TextView dateView;
 	TextView timeView;
 	EditText smsText;
-	Button scheduleTextButton;
+	Button scheduleSMSButton;
 	Button scheduleTime;
 	Button scheduleDate;
 	Calendar cal;
@@ -54,7 +54,7 @@ public class Scheduler extends Activity {
 		smsText = (EditText)findViewById(R.id.smsText);
 		scheduleDate = (Button)findViewById(R.id.scheduleDate);
 		scheduleTime = (Button)findViewById(R.id.scheduleTime);
-		scheduleTextButton = (Button)findViewById(R.id.scheduleTextButton);
+		scheduleSMSButton = (Button)findViewById(R.id.scheduleTextButton);
 		
 		
 		targetCal = Calendar.getInstance();
@@ -105,26 +105,20 @@ public class Scheduler extends Activity {
 			
 		});
 		
-		scheduleTextButton.setOnClickListener(new OnClickListener(){
+		scheduleSMSButton.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				
-				cal = Calendar.getInstance();
+
 				long difference = targetCal.getTimeInMillis();
 				
 				String smsData = smsText.getText().toString();
 				String smsAddressee = addressee.getText().toString(); 
+				int requestCode = (int)System.currentTimeMillis();
 				
-				Intent fireSendSMSClass = new Intent(Scheduler.this, SendSMS.class);
-				fireSendSMSClass.putExtra("smsData", smsData);
-				fireSendSMSClass.putExtra("smsAddressee", smsAddressee);
+				new SchedulingInProgress(difference, smsData, smsAddressee, requestCode).schedule();
 				
-				PendingIntent pdi = PendingIntent.getActivity(Scheduler.this, 0, fireSendSMSClass, 
-						PendingIntent.FLAG_ONE_SHOT);
-				
-				newManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-				newManager.set(AlarmManager.RTC_WAKEUP, difference, pdi);
 				
 				Toast toast = Toast.makeText(Scheduler.this, workCompleted, Toast.LENGTH_LONG);
 				toast.show();
@@ -189,5 +183,37 @@ public class Scheduler extends Activity {
 			date = ""+i;
 		return date;
 	}
+	
+	private class SchedulingInProgress{
+		
+		long timeToTrigger;
+		String data;
+		String addressee;
+		int code;
+		
+		public SchedulingInProgress(long difference, String smsData,
+				String smsAddressee, int requestCode) {
+			timeToTrigger = difference;
+			data = smsData;
+			addressee = smsAddressee;
+			code = requestCode;
+			// TODO Auto-generated constructor stub
+		}
+
+		private void schedule(){
+			Intent fireSendSMSClass = new Intent(getApplicationContext(), SendSMS.class);
+			fireSendSMSClass.putExtra("smsData", data);
+			fireSendSMSClass.putExtra("smsAddressee", addressee);
+			
+	
+			PendingIntent pdi = PendingIntent.getActivity(getApplicationContext(), code, fireSendSMSClass, 
+					PendingIntent.FLAG_ONE_SHOT);
+			
+			newManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+			newManager.set(AlarmManager.RTC_WAKEUP, timeToTrigger, pdi);
+		}
+		
+	}
+	
 
 }
