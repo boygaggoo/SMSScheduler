@@ -7,8 +7,10 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog.Builder;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,9 +34,9 @@ public class MainActivity extends Activity {
 
 	Button schedule;
 	ListView list;
-	Map<String, String> displayDataMap = new HashMap<String, String>();
+	private final Map<String, String> displayDataMap = new HashMap<String, String>();
 
-	ArrayAdapter<String> adapter;
+	private  ArrayAdapter<String> adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,26 +96,49 @@ public class MainActivity extends Activity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View view,
 					int position, long id) {
+				
 				String key = adapter.getItem(position);
 				String data = displayDataMap.get(key);
 				displayDataMap.remove(key);
 
-				String addressee = data.split("aqlpzaml")[1];
+				final String addressee = data.split("aqlpzaml")[1];
 				long time = Long.valueOf(data.split("aqlpzaml")[0]);
-				int finalID = Integer.valueOf(data.split("aqlpzaml")[3]);
-				String dateTime = sdf.format(time);
-				adapter.remove(addressee + " " + dateTime);
-				adapter.notifyDataSetChanged();
+				final int finalID = Integer.valueOf(data.split("aqlpzaml")[3]);
+				final String dateTime = sdf.format(time);
+				
+				Builder dialog = new Builder(view.getContext());
+				dialog.setTitle("! Delete Message" );
+				dialog.setMessage("Delete this message ? ");
+				dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						adapter.remove(addressee + " " + dateTime);
+						adapter.notifyDataSetChanged();
 
-				Intent cancelIntent = new Intent(getApplicationContext(), SendSMS.class);
-				PendingIntent pdi = PendingIntent.getActivity(getApplicationContext(), finalID, cancelIntent, 
-						PendingIntent.FLAG_ONE_SHOT);
+						Intent cancelIntent = new Intent(getApplicationContext(), SendSMS.class);
+						PendingIntent pdi = PendingIntent.getActivity(getApplicationContext(), finalID, cancelIntent, 
+								PendingIntent.FLAG_ONE_SHOT);
 
-				AlarmManager cancelManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-				cancelManager.cancel(pdi);
+						AlarmManager cancelManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+						cancelManager.cancel(pdi);
 
-				Toast toast = Toast.makeText(getApplicationContext(), "SMS cancelled", Toast.LENGTH_LONG);
-				toast.show();
+						Toast toast = Toast.makeText(getApplicationContext(), "SMS cancelled", Toast.LENGTH_LONG);
+						toast.show();
+					}
+				});
+				
+				dialog.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						dialog.cancel();
+					}
+				});
+				dialog.create().show();
+				
 
 				// TODO Auto-generated method stub
 				return false;
