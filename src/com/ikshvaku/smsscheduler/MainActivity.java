@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -75,6 +76,26 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 				// TODO Auto-generated method stub
 				
+			}
+			
+		});
+		
+		list.setOnItemLongClickListener(new OnItemLongClickListener(){
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View view,
+					int position, long id) {
+				String key = adapter.getItem(position);
+				String data = displayData.get(key);
+				displayData.remove(key);
+				
+				String addressee = data.split("aqlpzaml")[1];
+				long time = Long.valueOf(data.split("aqlpzaml")[0]);
+				String dateTime = sdf.format(time);
+				adapter.remove(addressee + " " + dateTime);
+				adapter.notifyDataSetChanged();
+				// TODO Auto-generated method stub
+				return false;
 			}
 			
 		});
