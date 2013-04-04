@@ -126,6 +126,7 @@ public class Scheduler extends Activity {
 				backIntent.putExtra("smsData", smsData);
 				backIntent.putExtra("smsAddressee", smsAddressee);
 				backIntent.putExtra("dateTime", difference);
+				backIntent.putExtra("requestCode", requestCode);
 				setResult(SCHEDULER_CONSTANT, backIntent);
 				finish();
 				// TODO Auto-generated method stub

@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
@@ -91,9 +95,21 @@ public class MainActivity extends Activity {
 				
 				String addressee = data.split("aqlpzaml")[1];
 				long time = Long.valueOf(data.split("aqlpzaml")[0]);
+				int finalID = Integer.valueOf(data.split("aqlpzaml")[3]);
 				String dateTime = sdf.format(time);
 				adapter.remove(addressee + " " + dateTime);
 				adapter.notifyDataSetChanged();
+				
+				Intent cancelIntent = new Intent(getApplicationContext(), SendSMS.class);
+				PendingIntent pdi = PendingIntent.getActivity(getApplicationContext(), finalID, cancelIntent, 
+						PendingIntent.FLAG_ONE_SHOT);
+				
+				AlarmManager cancelManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+				cancelManager.cancel(pdi);
+				
+				Toast toast = Toast.makeText(getApplicationContext(), "SMS cancelled", Toast.LENGTH_LONG);
+				toast.show();
+				
 				// TODO Auto-generated method stub
 				return false;
 			}
@@ -112,10 +128,11 @@ public class MainActivity extends Activity {
 			String addressee = data.getStringExtra("smsAddressee");
 			String smsText = data.getStringExtra("smsData");
 			long time = data.getLongExtra("dateTime", 0);
+			int uniqueID = data.getIntExtra("requestCode", 0);
 			String dateTime = sdf.format(time);
 			String finalData = addressee + " " + dateTime;
 			adapter.add(finalData);
-			displayData.put(finalData, time + "aqlpzaml" + addressee + "aqlpzaml" + smsText);
+			displayData.put(finalData, time + "aqlpzaml" + addressee + "aqlpzaml" + smsText + "aqlpzaml" + uniqueID);
 			adapter.notifyDataSetChanged();
 		}
 	}
