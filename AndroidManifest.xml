@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ikshvaku.smsscheduler"
-    android:versionCode="7"
-    android:versionName="3.3" >
+    android:versionCode="8"
+    android:versionName="3.4" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -35,6 +35,10 @@
         <activity
             android:name="com.ikshvaku.smsscheduler.DialogActivity"
             android:label="@string/title_activity_dialog" >
+        </activity>
+        <activity
+            android:name="com.ikshvaku.smsscheduler.ShowMessage"
+            android:label="@string/title_activity_show_message" >
         </activity>
     </application>
 

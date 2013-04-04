@@ -27,10 +27,12 @@ public class MainActivity extends Activity {
 	
 	public static final int MAIN_ACTIVITY_CONSTANT = 1; 
 	DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+	DateFormat dateFormat = SimpleDateFormat.getDateInstance();
+	DateFormat timeFormat =  SimpleDateFormat.getDateTimeInstance();
 	
 	Button schedule;
 	ListView list;
-	Map<String, String> displayData = new HashMap<String, String>();
+	Map<String, String> displayDataMap = new HashMap<String, String>();
 	
 	ArrayAdapter<String> adapter;
 	
@@ -67,18 +69,21 @@ public class MainActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position,
 					long id) {
+				
 				String key = adapter.getItem(position);
-				String data = displayData.get(key);
-				String time = data.split("aqlpzaml")[0];
+				String data = displayDataMap.get(key);
+				long time = Long.valueOf(data.split("aqlpzaml")[0]);
 				String addressee = data.split("aqlpzaml")[1];
 				String text = data.split("aqlpzaml")[2];
 				
-				Intent intent = new Intent(MainActivity.this, DialogActivity.class);
-				intent.putExtra("to", addressee);
-				intent.putExtra("time", time);
-				intent.putExtra("text", text);
-				startActivity(intent);
-				// TODO Auto-generated method stub
+				String formattedTime = timeFormat.format(time);
+				String formattedDate = timeFormat.format(time);
+				
+				String dialogData = "To: " +  addressee + "\n" + "Date: " + formattedDate + "\n" + "Time: " + 
+									formattedTime + "\n\n" + "SMS: " + "\n" + text;
+
+				ShowMessage fragment = ShowMessage.getDialogFragment(dialogData);
+				fragment.show(getFragmentManager(), "dialog");
 				
 			}
 			
@@ -90,8 +95,8 @@ public class MainActivity extends Activity {
 			public boolean onItemLongClick(AdapterView<?> arg0, View view,
 					int position, long id) {
 				String key = adapter.getItem(position);
-				String data = displayData.get(key);
-				displayData.remove(key);
+				String data = displayDataMap.get(key);
+				displayDataMap.remove(key);
 				
 				String addressee = data.split("aqlpzaml")[1];
 				long time = Long.valueOf(data.split("aqlpzaml")[0]);
@@ -132,7 +137,7 @@ public class MainActivity extends Activity {
 			String dateTime = sdf.format(time);
 			String finalData = addressee + " " + dateTime;
 			adapter.add(finalData);
-			displayData.put(finalData, time + "aqlpzaml" + addressee + "aqlpzaml" + smsText + "aqlpzaml" + uniqueID);
+			displayDataMap.put(finalData, time + "aqlpzaml" + addressee + "aqlpzaml" + smsText + "aqlpzaml" + uniqueID);
 			adapter.notifyDataSetChanged();
 		}
 	}
