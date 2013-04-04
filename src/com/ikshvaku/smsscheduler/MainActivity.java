@@ -24,23 +24,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	
+
 	public static final int MAIN_ACTIVITY_CONSTANT = 1; 
 	DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
 	DateFormat dateFormat = SimpleDateFormat.getDateInstance();
-	DateFormat timeFormat =  SimpleDateFormat.getDateTimeInstance();
-	
+	DateFormat timeFormat =  SimpleDateFormat.getTimeInstance();
+
 	Button schedule;
 	ListView list;
 	Map<String, String> displayDataMap = new HashMap<String, String>();
-	
+
 	ArrayAdapter<String> adapter;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		TextView welcome = (TextView)findViewById(R.id.welcome_one);
 		try{
 		list = (ListView)findViewById(R.id.list);}
@@ -49,46 +49,46 @@ public class MainActivity extends Activity {
 			welcome.setText("beep beep. error");
 		}
 		schedule = (Button)findViewById(R.id.schedule);
-		
+
 		schedule.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				
+
 				Intent fireScheduleActivity = new Intent(MainActivity.this, Scheduler.class);
 				startActivityForResult(fireScheduleActivity, MAIN_ACTIVITY_CONSTANT);
 				// TODO Auto-generated method stub	
 			}	
 		});
-		
+
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
 		list.setAdapter(adapter);
-		
+
 		list.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position,
 					long id) {
-				
+
 				String key = adapter.getItem(position);
 				String data = displayDataMap.get(key);
 				long time = Long.valueOf(data.split("aqlpzaml")[0]);
 				String addressee = data.split("aqlpzaml")[1];
 				String text = data.split("aqlpzaml")[2];
-				
+
 				String formattedTime = timeFormat.format(time);
-				String formattedDate = timeFormat.format(time);
-				
+				String formattedDate = dateFormat.format(time);
+
 				String dialogData = "To: " +  addressee + "\n" + "Date: " + formattedDate + "\n" + "Time: " + 
 									formattedTime + "\n\n" + "SMS: " + "\n" + text;
 
 				ShowMessage fragment = ShowMessage.getDialogFragment(dialogData);
 				fragment.show(getFragmentManager(), "dialog");
-				
+
 			}
-			
+
 		});
-		
+
 		list.setOnItemLongClickListener(new OnItemLongClickListener(){
 
 			@Override
@@ -97,28 +97,28 @@ public class MainActivity extends Activity {
 				String key = adapter.getItem(position);
 				String data = displayDataMap.get(key);
 				displayDataMap.remove(key);
-				
+
 				String addressee = data.split("aqlpzaml")[1];
 				long time = Long.valueOf(data.split("aqlpzaml")[0]);
 				int finalID = Integer.valueOf(data.split("aqlpzaml")[3]);
 				String dateTime = sdf.format(time);
 				adapter.remove(addressee + " " + dateTime);
 				adapter.notifyDataSetChanged();
-				
+
 				Intent cancelIntent = new Intent(getApplicationContext(), SendSMS.class);
 				PendingIntent pdi = PendingIntent.getActivity(getApplicationContext(), finalID, cancelIntent, 
 						PendingIntent.FLAG_ONE_SHOT);
-				
+
 				AlarmManager cancelManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 				cancelManager.cancel(pdi);
-				
+
 				Toast toast = Toast.makeText(getApplicationContext(), "SMS cancelled", Toast.LENGTH_LONG);
 				toast.show();
-				
+
 				// TODO Auto-generated method stub
 				return false;
 			}
-			
+
 		});
 	}
 
@@ -127,7 +127,7 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 		if(resultCode == Scheduler.SCHEDULER_CONSTANT)
 		{
 			String addressee = data.getStringExtra("smsAddressee");
