@@ -2,6 +2,8 @@ package com.ikshvaku.smsscheduler;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +11,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,6 +25,7 @@ public class MainActivity extends Activity {
 	
 	Button schedule;
 	ListView list;
+	Map<String, String> displayData = new HashMap<String, String>();
 	
 	ArrayAdapter<String> adapter;
 	
@@ -51,6 +56,28 @@ public class MainActivity extends Activity {
 		
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
 		list.setAdapter(adapter);
+		
+		list.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int position,
+					long id) {
+				String key = adapter.getItem(position);
+				String data = displayData.get(key);
+				String time = data.split("aqlpzaml")[0];
+				String addressee = data.split("aqlpzaml")[1];
+				String text = data.split("aqlpzaml")[2];
+				
+				Intent intent = new Intent(MainActivity.this, DialogActivity.class);
+				intent.putExtra("to", addressee);
+				intent.putExtra("time", time);
+				intent.putExtra("text", text);
+				startActivity(intent);
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 
@@ -67,6 +94,7 @@ public class MainActivity extends Activity {
 			String dateTime = sdf.format(time);
 			String finalData = addressee + " " + dateTime;
 			adapter.add(finalData);
+			displayData.put(finalData, time + "aqlpzaml" + addressee + "aqlpzaml" + smsText);
 			adapter.notifyDataSetChanged();
 		}
 	}

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ikshvaku.smsscheduler"
-    android:versionCode="4"
-    android:versionName="3.0" >
+    android:versionCode="5"
+    android:versionName="3.1" >
 
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
-    
+
     <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
@@ -31,6 +31,10 @@
         <activity
             android:name="com.ikshvaku.smsscheduler.SendSMS"
             android:label="@string/title_activity_send_sms" >
+        </activity>
+        <activity
+            android:name="com.ikshvaku.smsscheduler.DialogActivity"
+            android:label="@string/title_activity_dialog" >
         </activity>
     </application>
 
