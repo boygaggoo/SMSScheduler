@@ -2,9 +2,11 @@
 
 This application allows you to schedule SMS on your phone for some future data, future time. 
 
-For the first version, only one SMS will be allowed to be scheduled, the user will have to enter the phone number and the user won't have any way to cancel once scheduled. 
-In later editions, user will be able to schedule multiple messages. User will be able to select a phone number from the contacts. Also, user will be able to cancel/modify the properties of the scheduled
-message.
+The user is allowed to schedule more than one messages, which are displayed on the main window of the application. These can be removed or unscheduled after a long tap on the respective message. 
+
+Future deliverables: 
+a.) Choose phone number from contacts
+b.) Remove the sent messages from the display in main window.
 
 ---> SMS Scheduler <---
 

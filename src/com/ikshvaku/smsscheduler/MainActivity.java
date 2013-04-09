@@ -97,10 +97,9 @@ public class MainActivity extends Activity {
 			public boolean onItemLongClick(AdapterView<?> arg0, View view,
 					int position, long id) {
 				
-				String key = adapter.getItem(position);
+				final String key = adapter.getItem(position);
 				String data = displayDataMap.get(key);
-				displayDataMap.remove(key);
-
+				
 				final String addressee = data.split("aqlpzaml")[1];
 				long time = Long.valueOf(data.split("aqlpzaml")[0]);
 				final int finalID = Integer.valueOf(data.split("aqlpzaml")[3]);
@@ -114,6 +113,7 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
+						displayDataMap.remove(key);
 						adapter.remove(addressee + " " + dateTime);
 						adapter.notifyDataSetChanged();
 

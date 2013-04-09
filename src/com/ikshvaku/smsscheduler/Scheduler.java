@@ -56,7 +56,6 @@ public class Scheduler extends Activity {
 		scheduleTime = (Button)findViewById(R.id.scheduleTime);
 		scheduleSMSButton = (Button)findViewById(R.id.scheduleTextButton);
 		
-		
 		targetCal = Calendar.getInstance();
 		targetCal.set(Calendar.SECOND, 00);
 		
